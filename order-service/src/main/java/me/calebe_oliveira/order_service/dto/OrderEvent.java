@@ -13,4 +13,13 @@ public class OrderEvent {
     private String status; // pending, progress, completed
     private String message;
     private Order order;
+
+    @Override
+    public String toString() {
+        return "OrderEvent{" +
+                "status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                ", order=" + order +
+                '}';
+    }
 }

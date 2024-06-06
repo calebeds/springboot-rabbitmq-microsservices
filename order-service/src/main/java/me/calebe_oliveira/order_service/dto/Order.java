@@ -14,4 +14,14 @@ public class Order {
     private String name;
     private Integer qty;
     private Double price;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId='" + orderId + '\'' +
+                ", name='" + name + '\'' +
+                ", qty=" + qty +
+                ", price=" + price +
+                '}';
+    }
 }
