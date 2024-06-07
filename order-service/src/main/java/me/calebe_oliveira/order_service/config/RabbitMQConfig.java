@@ -14,15 +14,21 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     private final String orderQueue;
+    private final String emailQueue;
     private final String exchangeName;
     private final String orderRoutingKey;
+    private final String emailRoutingKey;
 
     public RabbitMQConfig(@Value("${rabbitmq.queue.order.name}") String orderQueue,
+                          @Value("${rabbitmq.queue.email.name}") String emailQueue,
                           @Value("${rabbitmq.exchange.name}") String exchangeName,
-                          @Value("${rabbitmq.binding.routing.key}") String orderRoutingKey) {
+                          @Value("${rabbitmq.binding.routing.key}") String orderRoutingKey,
+                          @Value("${rabbitmq.binding.email.routing.key}") String emailRoutingKey) {
         this.orderQueue = orderQueue;
+        this.emailQueue = emailQueue;
         this.exchangeName = exchangeName;
         this.orderRoutingKey = orderRoutingKey;
+        this.emailRoutingKey = emailRoutingKey;
     }
 
     // spring bean for queue - order queue
@@ -30,6 +36,12 @@ public class RabbitMQConfig {
     public Queue orderQueue() {
         return new Queue(orderQueue);
     }
+
+    @Bean
+    public Queue emailQueue() {
+        return new Queue(emailQueue);
+    }
+
 
     // spring bean for exchange
     @Bean
@@ -44,6 +56,14 @@ public class RabbitMQConfig {
                 .bind(orderQueue())
                 .to(exchange())
                 .with(orderRoutingKey);
+    }
+
+    @Bean
+    public Binding emailBinding() {
+        return BindingBuilder
+                .bind(emailQueue())
+                .to(exchange())
+                .with(emailRoutingKey);
     }
 
     // message converter
