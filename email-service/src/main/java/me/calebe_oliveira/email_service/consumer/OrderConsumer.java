@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class OrderConsumer {
 
-    @RabbitListener(queues = "${rabbitmq.queue.email.name=}")
+    @RabbitListener(queues = "${rabbitmq.queue.email.name}")
     public void consume(OrderEvent orderEvent) {
         log.info(String.format("Order event received in email service -> %s", orderEvent.toString()));
 
